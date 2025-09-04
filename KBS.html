@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اینفوگرافیک طرح کسب‌وکار: کیت بالکن سبز</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700&display=swap" rel="stylesheet">
+    <!-- Color Palette: Lively & Natural -->
+    <!-- Confirmation: NEITHER Mermaid JS NOR SVG were used in this file. All diagrams are built with HTML/CSS and all charts are rendered on Canvas by Chart.js. -->
+    <style>
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background-color: #F2F2F2;
+            color: #2F2F2F;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .card {
+            background-color: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        .stat-card {
+            background-color: #4A7B39;
+            color: white;
+            border-radius: 0.75rem;
+            padding: 2rem;
+            text-align: center;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 23px;
+            width: 4px;
+            background-color: #A3B5A0;
+            border-radius: 2px;
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+        .timeline-dot {
+            position: absolute;
+            top: 5px;
+            right: 12px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: #4A7B39;
+            border: 4px solid #F2F2F2;
+        }
+    </style>
+</head>
+<body class="bg-[#F2F2F2]">
+
+    <div class="container mx-auto p-4 md:p-8 max-w-6xl">
+
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-[#4A7B39] mb-4">طرح کسب‌وکار: کیت بالکن سبز</h1>
+            <p class="text-lg text-gray-600">بازگرداندن طبیعت به خانه‌های آپارتمانی، به ساده‌ترین شکل ممکن</p>
+        </header>
+
+        <main class="space-y-12">
+
+            <section id="problem-solution" class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div class="card">
+                    <h2 class="text-2xl font-bold text-[#4A7B39] mb-4">مسئله: جدایی از طبیعت در زندگی شهری</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        زندگی در آپارتمان‌ها ما را از نیاز فطری به طبیعت دور کرده است. این گسست باعث افزایش استرس و کاهش کیفیت زندگی می‌شود. «بالکن سبز» پاسخی است به این خلأ؛ یک تجربه کامل برای خلق حیات و آرامش.
+                    </p>
+                </div>
+                <div class="card text-center">
+                    <h2 class="text-2xl font-bold text-[#4A7B39] mb-4">راه حل: یک وعده شفاف و قدرتمند</h2>
+                    <div class="flex justify-around items-center h-full">
+                        <div class="text-center">
+                            <div class="text-5xl font-bold text-[#4A7B39]">۳۰</div>
+                            <p class="font-semibold mt-2">دقیقه نصب</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-5xl font-bold text-[#4A7B39]">۳۰</div>
+                            <p class="font-semibold mt-2">روز ضمانت نتیجه</p>
+                        </div>
+                    </div>
+                     <p class="text-gray-600 mt-4">یک بسته کامل و سفارشی، با نگهداری آسان برای موفقیت قطعی شما.</p>
+                </div>
+            </section>
+            
+            <section id="market-revenue" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="card">
+                    <h2 class="text-2xl font-bold text-[#4A7B39] mb-4">مشتریان ما چه کسانی هستند؟</h2>
+                    <p class="text-gray-700 mb-4">ما بر روی سه گروه اصلی از مشتریان تمرکز کرده‌ایم که بیشترین نیاز را به محصول ما دارند.</p>
+                    <div class="chart-container h-72 md:h-80">
+                        <canvas id="customerSegmentsChart"></canvas>
+                    </div>
+                </div>
+                <div class="card">
+                    <h2 class="text-2xl font-bold text-[#4A7B39] mb-4">جریان‌های درآمدی ما</h2>
+                     <p class="text-gray-700 mb-4">مدل درآمدی ما متنوع و پایدار است تا رشد بلندمدت کسب‌وکار را تضمین کند.</p>
+                    <div class="chart-container h-72 md:h-80">
+                        <canvas id="revenueStreamsChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <section id="how-it-works" class="card md:col-span-2">
+                <h2 class="text-2xl text-center font-bold text-[#4A7B39] mb-6">سفر مشتری: از ایده تا بالکن سبز</h2>
+                <div class="flex flex-col md:flex-row justify-between items-center text-center space-y-4 md:space-y-0 md:space-x-4">
+                    <div class="flex flex-col items-center">
+                        <div class="bg-[#EAEFDE] rounded-full w-20 h-20 flex items-center justify-center text-3xl font-bold text-[#4A7B39]">۱</div>
+                        <p class="mt-2 font-semibold">پاسخ به کوئیز</p>
+                        <p class="text-sm text-gray-600">چند سوال ساده برای شناخت شما و بالکن‌تان</p>
+                    </div>
+                    <div class="text-[#A3B5A0] text-4xl hidden md:block">&rarr;</div>
+                    <div class="text-[#A3B5A0] text-4xl md:hidden">&darr;</div>
+                    <div class="flex flex-col items-center">
+                        <div class="bg-[#EAEFDE] rounded-full w-20 h-20 flex items-center justify-center text-3xl font-bold text-[#4A7B39]">۲</div>
+                        <p class="mt-2 font-semibold">دریافت کیت سفارشی</p>
+                        <p class="text-sm text-gray-600">یک جعبه جادویی که دقیقا برای شما طراحی شده</p>
+                    </div>
+                     <div class="text-[#A3B5A0] text-4xl hidden md:block">&rarr;</div>
+                     <div class="text-[#A3B5A0] text-4xl md:hidden">&darr;</div>
+                    <div class="flex flex-col items-center">
+                        <div class="bg-[#EAEFDE] rounded-full w-20 h-20 flex items-center justify-center text-3xl font-bold text-[#4A7B39]">۳</div>
+                        <p class="mt-2 font-semibold">نصب در ۳۰ دقیقه</p>
+                        <p class="text-sm text-gray-600">یک سرگرمی سریع و لذت‌بخش با راهنمای کامل</p>
+                    </div>
+                     <div class="text-[#A3B5A0] text-4xl hidden md:block">&rarr;</div>
+                     <div class="text-[#A3B5A0] text-4xl md:hidden">&darr;</div>
+                    <div class="flex flex-col items-center">
+                        <div class="bg-[#EAEFDE] rounded-full w-20 h-20 flex items-center justify-center text-3xl font-bold text-[#4A7B39]">۴</div>
+                        <p class="mt-2 font-semibold">لذت از نتیجه</p>
+                        <p class="text-sm text-gray-600">مشاهده اولین جوانه‌ها در کمتر از ۳۰ روز</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="financials" class="card">
+                <h2 class="text-2xl text-center font-bold text-[#4A7B39] mb-2">داستان مالی: از سرمایه‌گذاری تا سودآوری</h2>
+                <p class="text-center text-gray-600 mb-6">این پروژه با وجود نیاز به سرمایه‌گذاری اولیه، پتانسیل رشد و سودآوری بسیار بالایی در بلندمدت دارد.</p>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 text-center">
+                    <div class="stat-card">
+                        <h3 class="text-xl font-bold">سرمایه‌گذاری اولیه</h3>
+                        <p class="text-4xl font-bold mt-2">۷</p>
+                        <p class="text-lg">میلیارد تومان</p>
+                    </div>
+                    <div class="stat-card bg-[#A3B5A0]">
+                        <h3 class="text-xl font-bold">ارزش خالص پروژه (۵ ساله)</h3>
+                        <p class="text-4xl font-bold mt-2">۳۵.۳</p>
+                        <p class="text-lg">میلیارد تومان</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 class="text-xl font-bold">بازگشت سرمایه</h3>
+                        <p class="text-4xl font-bold mt-2">+۵X</p>
+                        <p class="text-lg">در طی ۵ سال</p>
+                    </div>
+                </div>
+                <div class="mt-8">
+                    <h3 class="text-xl font-bold text-center text-gray-800 mb-4">پیش‌بینی رشد درآمد (میلیارد تومان)</h3>
+                    <div class="chart-container h-80">
+                        <canvas id="revenueGrowthChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <section id="growth-path" class="card">
+                <h2 class="text-2xl text-center font-bold text-[#4A7B39] mb-8">نقشه راه و مسیر رشد ما</h2>
+                <div class="relative timeline pr-10">
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="pr-4">
+                            <h3 class="font-bold text-lg text-gray-800">فاز اول: شروع و اعتبارسنجی (۹۰ روز اول)</h3>
+                            <p class="text-gray-600">تولید کیت‌های آزمایشی، فروش محدود در یک منطقه و جمع‌آوری بازخورد برای بهینه‌سازی محصول نهایی.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="pr-4">
+                            <h3 class="font-bold text-lg text-gray-800">فاز دوم: رشد و ساختن جامعه (ماه ۴ تا ۱۸)</h3>
+                            <p class="text-gray-600">راه‌اندازی رسمی فروش آنلاین، کمپین‌های دیجیتال و ایجاد جامعه کاربری فعال با محتوای تولید شده توسط کاربران.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="pr-4">
+                            <h3 class="font-bold text-lg text-gray-800">فاز سوم: رهبری بازار (پس از ماه ۱۸)</h3>
+                            <p class="text-gray-600">ورود به کانال‌های B2B، گسترش جغرافیایی به شهرهای جدید و تبدیل شدن به انتخاب اول مردم برای باغبانی آپارتمانی.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="text-center mt-12 pt-8 border-t border-[#A3B5A0]">
+            <p class="text-gray-600">اینفوگرافیک طرح کسب‌وکار «بالکن سبز» - شهریور ۱۴۰۴</p>
+        </footer>
+    </div>
+
+<script>
+    function wrapLabels(label) {
+        if (typeof label === 'string' && label.length > 16) {
+            const words = label.split(' ');
+            const lines = [];
+            let currentLine = '';
+            for (const word of words) {
+                if ((currentLine + ' ' + word).length > 16 && currentLine.length > 0) {
+                    lines.push(currentLine);
+                    currentLine = word;
+                } else {
+                    currentLine += (currentLine.length === 0 ? '' : ' ') + word;
+                }
+            }
+            lines.push(currentLine);
+            return lines;
+        }
+        return label;
+    }
+
+    const defaultTooltipCallback = {
+        plugins: {
+            tooltip: {
+                callbacks: {
+                    title: function(tooltipItems) {
+                        const item = tooltipItems[0];
+                        let label = item.chart.data.labels[item.dataIndex];
+                        if (Array.isArray(label)) {
+                          return label.join(' ');
+                        } else {
+                          return label;
+                        }
+                    }
+                }
+            },
+            legend: {
+                position: 'bottom',
+                labels: {
+                     font: {
+                        family: 'Vazirmatn'
+                    }
+                }
+            }
+        }
+    };
+    
+    const chartColors = {
+        primary: '#4A7B39',
+        secondary: '#A3B5A0',
+        accent: '#EAEFDE',
+        dark: '#2F2F2F'
+    };
+    
+    // Customer Segments Chart
+    const ctx1 = document.getElementById('customerSegmentsChart').getContext('2d');
+    const customerSegmentsData = {
+        labels: ['خانواده‌های آپارتمان‌نشین', 'جوانان و دانشجویان', 'شرکت‌ها و دفاتر کوچک'].map(wrapLabels),
+        datasets: [{
+            label: 'تمرکز بر بخش مشتریان',
+            data: [45, 35, 20],
+            backgroundColor: [chartColors.primary, chartColors.secondary, chartColors.accent],
+            borderColor: '#FFFFFF',
+            borderWidth: 2,
+            hoverOffset: 4
+        }]
+    };
+    new Chart(ctx1, {
+        type: 'doughnut',
+        data: customerSegmentsData,
+        options: {
+            ...defaultTooltipCallback,
+            responsive: true,
+            maintainAspectRatio: false,
+        }
+    });
+
+    // Revenue Streams Chart
+    const ctx2 = document.getElementById('revenueStreamsChart').getContext('2d');
+    const revenueStreamsData = {
+        labels: ['فروش کیت‌ها', ['اشتراک فصلی', '(کلوب بالکن سبز)'], 'خدمات ویژه B2B', 'فروش محصولات جانبی'].map(wrapLabels),
+        datasets: [{
+            label: 'ترکیب درآمدی',
+            data: [60, 25, 10, 5],
+            backgroundColor: [
+                chartColors.primary,
+                'rgba(74, 123, 57, 0.7)',
+                chartColors.secondary,
+                chartColors.accent
+            ],
+             borderColor: '#FFFFFF',
+            borderWidth: 2,
+            hoverOffset: 4
+        }]
+    };
+    new Chart(ctx2, {
+        type: 'pie',
+        data: revenueStreamsData,
+        options: {
+             ...defaultTooltipCallback,
+            responsive: true,
+            maintainAspectRatio: false,
+        }
+    });
+    
+    // Revenue Growth Chart
+    const ctx3 = document.getElementById('revenueGrowthChart').getContext('2d');
+    const revenueGrowthData = {
+        labels: ['سال اول', 'سال دوم', 'سال سوم', 'سال چهارم', 'سال پنجم'],
+        datasets: [{
+            label: 'درآمد پیش‌بینی شده (میلیارد تومان)',
+            data: [6.2, 15.5, 30.1, 51.3, 72.9],
+            backgroundColor: chartColors.primary,
+            borderColor: chartColors.dark,
+            borderWidth: 2,
+            borderRadius: 5,
+            tension: 0.1
+        }]
+    };
+    new Chart(ctx3, {
+        type: 'bar',
+        data: revenueGrowthData,
+        options: {
+            ...defaultTooltipCallback,
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value) {
+                            return value + ' م'
+                        },
+                        font: {
+                            family: 'Vazirmatn'
+                        }
+                    }
+                },
+                x: {
+                    ticks: {
+                        font: {
+                            family: 'Vazirmatn'
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+</script>
+
+</body>
+</html>
